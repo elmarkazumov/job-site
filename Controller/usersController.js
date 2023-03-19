@@ -3,23 +3,37 @@
 const response = require('./../response')
 const db = require('./../settings/db')
 
-exports.users = (req, res) => {
+exports.getAllUsers = (req, res) => {
     db.query('SELECT * FROM `users`', (error, rows, fields) => {
         if(error) {
-            console.log(error);
+            console.log(400, error, res);
         } else{
-            response.status(rows, res);
+            response.status(200, rows, res);
         }
     })
 }
 
-exports.add = (req, res) => {
-    const sql = "INSERT INTO users (login, password, role) VALUES ('" + req.query.login + "','" + req.query.password + "','" + req.query.role +"')";
-    db.query(sql, (error, results) => {
-        if(error) {
-            return console.log(error);
+exports.signup = (req, res) => {
+
+    db.query("SELECT * FROM `users` WHERE `login` = '" + req.body.login + "'", (error, rows, fields) =>{
+        if(error){
+            response.status(400, error, res);
+        } else if(typeof rows !== 'undefined' && rows.length > 0){
+            console.log(rows);
+            const row = JSON.parse(JSON.stringify(rows));
+            row.map(item => {
+                response.status(302, {message: `Пользователь с именем - ${item.login} уже существует!`}, res);
+                return true;
+            })
         } else{
-            response.status(results, res);
+            const sql = "INSERT INTO users (login, password, role) VALUES ('" + req.body.login + "','" + req.body.password + "','" + req.body.role +"')";
+            db.query(sql, (error, results) => {
+                if(error) {
+                    response.status(400, error, res);
+                } else{
+                    response.status(200, {message: 'Успешная регистрация', results}, res);
+                }
+            })
         }
     })
 }

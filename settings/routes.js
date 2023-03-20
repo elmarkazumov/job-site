@@ -8,6 +8,10 @@ module.exports = (app) => {
         .get(usersController.getAllUsers)
     
     app
-        .route('/pages/signup')
+        .route('/pages/registration')
         .post(usersController.signup)
+
+    app
+        .route('/pages/login')
+        .get(usersController.signin)
 }

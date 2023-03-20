@@ -1,7 +1,10 @@
 'use strict'
 
+const jwt = require('jsonwebtoken')
+
 const response = require('./../response')
 const db = require('./../settings/db')
+const config = require('./../config')
 
 exports.getAllUsers = (req, res) => {
     db.query('SELECT * FROM `users`', (error, rows, fields) => {
@@ -33,6 +36,32 @@ exports.signup = (req, res) => {
                 } else{
                     response.status(200, {message: 'Успешная регистрация', results}, res);
                 }
+            })
+        }
+    })
+}
+
+exports.signin = (req,res) => {
+    db.query("SELECT `id`, `login`, `password` FROM `users` WHERE `login` = '"+req.body.login+"'", (error, rows, field) => {
+        if(error){
+            response.status(400, error, res);
+        } else if(rows.length <= 0){
+            response.status(404, 'user in not found', res);
+        } else{
+            const row = JSON.parse(JSON.stringify(rows));
+            row.map(item => {
+                const password = req.body.password == item.password ? true: false;
+                if(password){
+                    const token = jwt.sign({
+                        userId: item.id,
+                        login: item.login
+                    }, config.jwt, {expiresIn: '24h'});
+
+                    response.status(200, {token: token}, res);
+                } else{
+                    response.status(401, {message: 'password not valid'}, res);
+                }
+                return true;
             })
         }
     })

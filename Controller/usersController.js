@@ -7,12 +7,15 @@ const db = require('./../settings/db')
 const config = require('./../config')
 
 exports.getAllUsers = (req, res) => {
-    db.query('SELECT * FROM `users`', (error, rows, fields) => {
-        if(error) {
+    // res.render('users', {root: "./"})
+    
+    db.query("SELECT * FROM `users`", (error, rows, fields) => {
+        if (error) {
             console.log(400, error, res);
-        } else{
-            response.status(200, rows, res);
-        }
+          } else {
+            console.log(rows)
+            res.render('users', {root: "./", data: rows})
+          }
     })
 }
 
@@ -56,8 +59,8 @@ exports.signin = (req,res) => {
                         userId: item.id,
                         login: item.login
                     }, config.jwt, {expiresIn: '24h'});
-
-                    response.status(200, {token: token}, res);
+                    res.redirect('/users')
+                    // response.status(200, {token: `Bearer ${token}`}, res);
                 } else{
                     response.status(401, {message: 'password not valid'}, res);
                 }

@@ -1,0 +1,40 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login__window{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 300px;
+    height: 200px;
+    background-color: #ECECEC;
+    border: 1px solid rgb(185, 185, 185);
+    border-radius: 5px;
+}
+
+.login__window input{
+    padding: 5px;
+    height: 22px;
+    outline: none;
+}
+
+.login__window input[type=submit]{
+    background-color: #626262;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    width: 120px;
+    height: 30px;
+    cursor: pointer;
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Создание вакансии</title>
+</head>
+<body>
+    <header class="header">
+        <nav>
+            <a href="/users">Учетные записи</a>
+            <a href="/createVacancy">Создать вакансию</a>
+            <a href="/viewsResume">Просмотр резюме</a>
+            <a href="/viewsVacancy">Просмотр вакансий</a>
+        </nav>
+        <div class="header__logout">
+            <a href="">Выйти</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="main__block">
+
+            <form class="main__new-vacancy" action="" method="post">
+                <span>Название вакансии:</span>
+                <input type="text" name="name" class="name-vacancy" placeholder="" required>
+
+                <span>Описание:</span>
+                <textarea name="description" id="" cols="60" rows="3"></textarea>
+
+                <span>Обязанности:</span>
+                <p name="respons">-1</p>
+                <input type="text" id="">
+                <input type="button" value="Добавить">
+
+                <span>Требования:</span>
+                <p name="requirements">-1</p>
+                <input type="text" id="">
+                <input type="button" value="Добавить">
+
+                <span>Условия:</span>
+                <p name="conditions">-1</p>
+                <input type="text" id="">
+                <input type="button" value="Добавить">
+
+                <span>Опыт работы:</span>
+                <select name="experience" id="" required>
+                    <option value="1">1 год</option>
+                    <option value="2">2 год</option>
+                    <option value="3">3 год</option>
+                    <option value="4">4 год</option>
+                    <option value="5">5 год</option>
+                </select>
+
+                <span>Заработная плата:</span>
+                <div>
+                    <input name="pay" type="text" placeholder="">
+                    <input type="checkbox" name="pay_checkbox" id="his-pay">
+                    <label for="his-pay">Договорная</label>
+                </div>
+
+                <span>График работы:</span>
+                <select name="schedule" id="">
+                    <option value="5/2">5/2</option>
+                    <option value="2/2">2/2</option>
+                    <option value="indiv">Свой</option>
+                </select>
+
+                <span>Время:</span>
+                <select name="timework" id="">
+                    <option value="8-17">8:00 - 17:00</option>
+                    <option value="9-18">9:00 - 18:00</option>
+                    <option value="10-19">10:00 - 19:00</option>
+                </select>
+
+                <input type="submit" value="Разместить вакансию">
+            </form>
+
+        </div>
+    </main>
+</body>
+</html>

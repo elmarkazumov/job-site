@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Пользователи</title>
+</head>
+<body>
+    <header class="header">
+        <nav>
+            <a href="/users">Учетные записи</a>
+            <a href="/createVacancy">Создать вакансию</a>
+            <a href="">Просмотр резюме</a>
+            <a href="">Просмотр вакансий</a>
+        </nav>
+        <div class="header__logout">
+            <a href="">Выйти</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="main__block">
+            <form class="main__new-user" action="" method="post">
+                <input type="text" name="login" placeholder="Логин" required>
+                <input type="password" name="password" placeholder="Пароль" required>
+                <select name="role" id="" required>
+                    <option value="admin">admin</option>
+                    <option value="worker">worker</option>
+                </select>
+                <input type="submit" value="Новая учетная запись">
+            </form>
+
+            <div class="main__users">
+                <h3>Список пользователей</h3>
+              <% if(data.length){ data.forEach(user => { %>
+                <div class="main__elem-user">
+                    <div class="main__user-data">
+                        <span><%= user.login%></span> 
+                        <!-- <%= user.password%> -->
+                        <div><span>******</span><img src="/img/eye.png" width="16"></div>
+                        <span><%= user.role%> </span>
+                        <div>
+                            <input type="button" value="Изменить">
+                            <input type="button" value="Удалить">
+                        </div>
+                    </div>
+                    <span>Создано: 26.02.23</span>
+                </div>
+              
+                <% }) %>
+                <% }else{ %>
+                  <span>No data ever existed.</span>
+                <% } %>
+            </div>
+        </div>
+    </main>
+</body>
+</html>

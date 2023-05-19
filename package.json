@@ -1,25 +1,22 @@
 {
-  "name": "job-site",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "practice",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "test": "launch"
+    "start": ""
   },
-  "author": "elmarkazumov",
-  "license": "ISC",
   "dependencies": {
     "body-parser": "^1.20.2",
-    "cors": "^2.8.5",
-    "express": "^4.18.2",
+    "ejs": "~2.6.1",
+    "express": "~4.16.1",
     "express-session": "^1.17.3",
     "jsonwebtoken": "^9.0.0",
     "mysql": "^2.18.1",
     "mysql-server": "^1.0.5",
+    "npx": "^10.2.2",
     "passport": "^0.6.0",
-    "passport-local": "^1.0.0"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.21"
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "path": "^0.12.7"
   }
 }

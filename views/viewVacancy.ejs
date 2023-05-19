@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Просмотр вакансии</title>
+</head>
+<body>
+    <header class="header">
+        <nav>
+            <a href="/users">Учетные записи</a>
+            <a href="/createVacancy">Создать вакансию</a>
+            <a href="">Просмотр резюме</a>
+            <a href="">Просмотр вакансий</a>
+        </nav>
+        <div class="header__logout">
+            <a href="">Выйти</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="main__block">
+            
+            <% if(data.length){ data.forEach(vacancy => { %>
+            <div class="main__vacancy" data-id=<%= vacancy.id%>>
+                <b><span>Название вакансии:</span></b>
+                <span><%= vacancy.name%></span>
+
+                <b><span>Описание:</span></b>
+                <p>
+                    <%= vacancy.description%>
+                </p>
+
+                <b><span>Обязанности:</span></b>
+                <p>
+                    <%= vacancy.respons%>
+                </p>
+
+                <b><span>Требования:</span></b>
+                <p>
+                    <%= vacancy.requirements%>
+                </p>
+
+                <b><span>Условия:</span></b>
+                <p>
+                    <%= vacancy.conditions%>
+                </p>
+                
+
+                <b><span>Опыт работы:</span></b>
+                <span><%= vacancy.expereince%></span>
+
+                <b><span>Заработная плата:</span></b>
+                <span><%= (vacancy.pay_checkbox == 'on') ? "Договорная": (vacancy.pay + " Руб")%></span>
+
+                <b><span>График работы:</span></b>
+                <span><%= vacancy.schedule%> <%= vacancy.timework%></span>
+
+                <div>
+                    <input type="button" id="edit-Vacancy" value="Изменить">
+                    <input type="button" id="delete-Vacancy" value="Удалить">
+                </div>
+            </div>
+            <% }) %>
+            <% }else{ %>
+                <span>No data ever existed.</span>
+            <% } %>
+
+        </div>
+    </main>
+
+<script src="./js/script.js"></script>
+</body>
+</html>

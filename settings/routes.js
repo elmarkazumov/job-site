@@ -1,5 +1,7 @@
 'user strict'
 
+const { user } = require('../config')
+
 module.exports = (app) => {
     const usersController = require('./../Controller/usersController')
     const userFunctional = require('./../Controller/userFunctional')
@@ -33,5 +35,10 @@ module.exports = (app) => {
 
     app
         .route('/viewsVacancy')
-        .get(userFunctional.getAllVacancy)    
+        .get(userFunctional.getAllVacancy)
+        .post(userFunctional.changeVacancy)
+
+    app
+        .route('/editVacancy')
+        .get(userFunctional.changeVacancy)
 }

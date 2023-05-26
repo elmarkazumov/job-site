@@ -1,6 +1,5 @@
 const response = require('./../response')
 const db = require('./../settings/db')
-const config = require('./../config')
 
 exports.createVacancy = (req, res) => {
     // res.render('createVacancy', {root: "./"})
@@ -39,8 +38,31 @@ exports.getAllVacancy = (req, res) => {
         if (error) {
             console.log(400, error, res);
           } else {
-            console.log(rows)
+            // console.log(rows);
             res.render('viewVacancy', {root: "./", data: rows})
           }
     })
+}
+
+exports.changeVacancy = (req, res) => {
+    if(req.body.button_action == 'Удалить'){
+        db.query("DELETE FROM `Vacancy` WHERE `id` = '" + req.body.vacancyBlock_id + "'", (error, rows, fields) =>{
+            if(error){
+                console.log(error);
+            } else{
+                console.log('успешно удалено!');
+            }
+        }) 
+    }
+    if(req.body.button_action == 'Изменить'){
+        const vacancyId = req.body.vacancyBlock_id;
+        db.query("SELECT * FROM `Vacancy` WHERE `id` = '" + vacancyId + "'", (error, rows, fields) =>{
+            if(error){
+                console.log(error);
+            } else{
+                console.log('успешно перенаправлено на изменение!');
+                res.render('editVacancy', {root: "./", data: rows})
+            }
+        }) 
+    }
 }

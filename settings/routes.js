@@ -14,11 +14,8 @@ module.exports = (app) => {
     app    
         .route('/users')
         .get(usersController.getAllUsers)
+        .post(usersController.usersHandler)
     
-    app
-        .route('/users')
-        .post(usersController.signup)
-
     app
         .route('/login')
         .get((req, res) => {
@@ -40,5 +37,6 @@ module.exports = (app) => {
 
     app
         .route('/editVacancy')
-        .get(userFunctional.changeVacancy)
+        .get(userFunctional.editVacancy)
+        .post(userFunctional.editSaveVacancy)
 }

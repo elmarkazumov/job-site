@@ -23,7 +23,8 @@
         <div class="main__block">
 
             <% if(data.length){ data.forEach(vacancy => { %>
-            <form class="main__new-vacancy" action="" method="get">
+            <form class="main__new-vacancy" action="" method="post">
+                <input type="input" hidden value="<%= vacancy.id%>">
                 <span>Название вакансии:</span>
                 <input type="text" name="name" class="name-vacancy" placeholder="" required value=<%= vacancy.name%>>
 
@@ -31,19 +32,13 @@
                 <textarea name="description" id="" cols="60" rows="3"><%= vacancy.description%></textarea>
 
                 <span>Обязанности:</span>
-                <p name="respons">-1</p>
-                <input type="text" id="" value=<%= vacancy.respons%>>
-                <input type="button" value="Добавить">
+                <textarea name="respons" id="" cols="35" rows="5"><%= vacancy.respons%></textarea>
 
                 <span>Требования:</span>
-                <p name="requirements">-1</p>
-                <input type="text" id="" value=<%= vacancy.requirements%>>
-                <input type="button" value="Добавить">
+                <textarea name="requirements" id="" cols="35" rows="5"><%= vacancy.requirements%></textarea>
 
                 <span>Условия:</span>
-                <p name="conditions">-1</p>
-                <input type="text" id="" value=<%= vacancy.conditions%>>
-                <input type="button" value="Добавить">
+                <textarea name="conditions" id="" cols="35" rows="5"><%= vacancy.conditions%></textarea>
 
                 <span>Опыт работы:</span>
                 <select name="experience" id="" required value=<%= vacancy.expreince%>>
@@ -75,7 +70,7 @@
                     <option value="10-19">10:00 - 19:00</option>
                 </select>
 
-                <input type="submit" value="Разместить вакансию">
+                <input type="submit" name="button_action" value="Сохранить вакансию">
             </form>
             <% }) %>
             <% }else{ %>

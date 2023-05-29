@@ -11,8 +11,8 @@
         <nav>
             <a href="/users">Учетные записи</a>
             <a href="/createVacancy">Создать вакансию</a>
-            <a href="">Просмотр резюме</a>
-            <a href="">Просмотр вакансий</a>
+            <a href="/viewsResume">Просмотр резюме</a>
+            <a href="/viewsVacancy">Просмотр вакансий</a>
         </nav>
         <div class="header__logout">
             <a href="">Выйти</a>
@@ -25,7 +25,7 @@
             <% if(data.length){ data.forEach(vacancy => { %>
                 <form action="" method="post">
                     <div class="main__vacancy">
-                        <input hidden name="vacancyBlock_id" value=<%= vacancy.id%>>
+                        <input hidden id="vacancy_id" name="vacancyBlock_id" value=<%= vacancy.id%>>
                         <b><span>Название вакансии:</span></b>
                         <span><%= vacancy.name%></span>
         
@@ -51,7 +51,7 @@
                         
         
                         <b><span>Опыт работы:</span></b>
-                        <span><%= vacancy.expereince%></span>
+                        <span><%= vacancy.experience%></span>
         
                         <b><span>Заработная плата:</span></b>
                         <span><%= (vacancy.pay_checkbox == 'on') ? "Договорная": (vacancy.pay + " Руб")%></span>

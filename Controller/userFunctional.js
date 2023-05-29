@@ -1,9 +1,8 @@
 const response = require('./../response')
 const db = require('./../settings/db')
+const localStorage = require("localStorage")
 
 exports.createVacancy = (req, res) => {
-    // res.render('createVacancy', {root: "./"})
-    
     db.query("SELECT * FROM `Vacancy` WHERE `name` = '" + req.body.name + "'", (error, rows, fields) =>{
         if(error){
             response.status(400, error, res);
@@ -32,13 +31,10 @@ exports.createVacancy = (req, res) => {
 }
 
 exports.getAllVacancy = (req, res) => {
-    // res.render('users', {root: "./"})
-    
     db.query("SELECT * FROM `Vacancy`", (error, rows, fields) => {
         if (error) {
             console.log(400, error, res);
           } else {
-            // console.log(rows);
             res.render('viewVacancy', {root: "./", data: rows})
           }
     })
@@ -50,19 +46,40 @@ exports.changeVacancy = (req, res) => {
             if(error){
                 console.log(error);
             } else{
-                console.log('успешно удалено!');
             }
         }) 
     }
     if(req.body.button_action == 'Изменить'){
         const vacancyId = req.body.vacancyBlock_id;
+        localStorage.setItem('id', vacancyId);
         db.query("SELECT * FROM `Vacancy` WHERE `id` = '" + vacancyId + "'", (error, rows, fields) =>{
             if(error){
                 console.log(error);
             } else{
-                console.log('успешно перенаправлено на изменение!');
-                res.render('editVacancy', {root: "./", data: rows})
+                res.redirect('/editVacancy');
             }
         }) 
     }
+}
+
+exports.editVacancy = (req, res) => {
+    db.query("SELECT * FROM `Vacancy` WHERE `id` = '" + localStorage.getItem('id') + "'", (error, rows, fields) =>{
+        if(error){
+            console.log(error);
+        } else{
+            res.render('editVacancy', {root: "./", data: rows});
+        }
+    }) 
+}
+
+exports.editSaveVacancy = (req, res) => { 
+    db.query("UPDATE `Vacancy` SET `name` = '" + req.body.name + "', `description` = '" + req.body.description + "', respons = '" + req.body.respons + "', requirements = '" +
+    req.body.requirements + "', conditions = '" + req.body.conditions + "', pay = '" + req.body.pay + "', pay_checkbox = '" + req.body.pay_checkbox + "', schedule = '" + req.body.schedule +
+    "', timework = '" + req.body.timework + "', experience = '" + req.body.experience +"' WHERE `id` = '" + localStorage.getItem('id') + "'", (error, rows, fields) =>{
+        if(error){
+            console.log(error);
+        } else{
+            res.redirect('/viewsVacancy');
+        }
+    }) 
 }

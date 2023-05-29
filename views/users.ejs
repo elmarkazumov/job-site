@@ -11,8 +11,8 @@
         <nav>
             <a href="/users">Учетные записи</a>
             <a href="/createVacancy">Создать вакансию</a>
-            <a href="">Просмотр резюме</a>
-            <a href="">Просмотр вакансий</a>
+            <a href="/viewsResume">Просмотр резюме</a>
+            <a href="/viewsVacancy">Просмотр вакансий</a>
         </nav>
         <div class="header__logout">
             <a href="">Выйти</a>
@@ -28,26 +28,26 @@
                     <option value="admin">admin</option>
                     <option value="worker">worker</option>
                 </select>
-                <input type="submit" value="Новая учетная запись">
+                <input type="submit" name="button_action" value="Новая учетная запись">
             </form>
 
             <div class="main__users">
                 <h3>Список пользователей</h3>
               <% if(data.length){ data.forEach(user => { %>
-                <div class="main__elem-user">
+              
+                <form class="main__elem-user" method="post">
                     <div class="main__user-data">
-                        <span><%= user.login%></span> 
-                        <!-- <%= user.password%> -->
-                        <div><span>******</span><img src="/img/eye.png" width="16"></div>
-                        <span><%= user.role%> </span>
+                        <input name="login" type="text" hidden value="<%=user.login%>">
+                        <span>Логин: <%= user.login%></span> 
+                        <span>Пароль: <%= user.password%></span>
+                        <span>Роль: <%= user.role%> </span>
                         <div>
-                            <input type="button" value="Изменить">
-                            <input type="button" value="Удалить">
+                            <input type="submit" name="button_action" value="Удалить">
                         </div>
                     </div>
                     <span>Создано: 26.02.23</span>
-                </div>
-              
+                </form>
+
                 <% }) %>
                 <% }else{ %>
                   <span>No data ever existed.</span>

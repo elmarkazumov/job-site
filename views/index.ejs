@@ -16,26 +16,21 @@
     <main class="main">
         <div class="main__block main-guest">
 
-            <div class="main__resume resume-guest">
-                <h2>Junior Web-программист</h2>
-                <h4>от 45 000 руб.</h4>
-                <span>Требуемый опыт работы: 1 год</span>
-                <span>Полная занятость, удаленная работа</span>
+            <% if(data.length){ data.forEach(vacancy => { %>
+            <form class="main__resume resume-guest" method="post">
+                <input hidden name="vacancyBlock_id" value=<%= vacancy.id%>>
+                <h2><%= vacancy.name%></h2>
+                <h4><%= (vacancy.pay_checkbox == 'on') ? "Договорная з/п": ("от " + vacancy.pay + " Руб.")%></h4>
+                <span>Требуемый опыт работы: <%= vacancy.experience%> год</span>
+                <span>График работы: <%= vacancy.schedule%> <%= vacancy.timework%></span>
                 <div>
-                    <input type="button" value="Откликнуться">
+                    <input type="submit" value="Откликнуться">
                 </div>
-            </div>
-
-            <div class="main__resume resume-guest">
-                <h2>1с-программист</h2>
-                <h4>от 70 000 руб.</h4>
-                <span>Требуемый опыт работы: 3-5 года</span>
-                <span>Полная занятость</span>
-                <div>
-                    <input type="button" value="Откликнуться">
-                </div>
-            </div>
-
+            </form>
+            <% }) %>
+            <% }else{ %>
+                <span>No data ever existed.</span>
+            <% } %>
         </div>
     </main>
 

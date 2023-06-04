@@ -1,5 +1,5 @@
-const response = require('./../response')
-const db = require('./../settings/db')
+const response = require('../response')
+const db = require('../settings/db')
 const localStorage = require("localStorage")
 
 exports.createVacancy = (req, res) => {
@@ -50,15 +50,8 @@ exports.changeVacancy = (req, res) => {
         }) 
     }
     if(req.body.button_action == 'Изменить'){
-        const vacancyId = req.body.vacancyBlock_id;
-        localStorage.setItem('id', vacancyId);
-        db.query("SELECT * FROM `Vacancy` WHERE `id` = '" + vacancyId + "'", (error, rows, fields) =>{
-            if(error){
-                console.log(error);
-            } else{
-                res.redirect('/editVacancy');
-            }
-        }) 
+        localStorage.setItem('id', req.body.vacancyBlock_id);
+        res.redirect('/editVacancy');
     }
 }
 

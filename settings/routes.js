@@ -4,7 +4,8 @@ const { user } = require('../config')
 
 module.exports = (app) => {
     const usersController = require('./../Controller/usersController')
-    const userFunctional = require('./../Controller/userFunctional')
+    const userFunctional = require('../Controller/vacancyController')
+    const guestController = require('../Controller/guestController')
     const passport = require('passport')
 
     // app
@@ -39,4 +40,14 @@ module.exports = (app) => {
         .route('/editVacancy')
         .get(userFunctional.editVacancy)
         .post(userFunctional.editSaveVacancy)
+
+    app
+        .route('/Vacancy')
+        .get(guestController.getAllVacancy)
+        .post(guestController.redirectVacancy)
+
+    app
+        .route('/vacancyForm')
+        .get(guestController.renderSelectedVacancy)
+        .post(guestController.sendForm)
 }

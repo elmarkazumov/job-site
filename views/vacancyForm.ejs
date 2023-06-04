@@ -4,74 +4,69 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="stylesheet" href="./css/main.css">
-    <title>Вакансии</title>
+    <title>Отправка резюме</title>
 </head>
 <body>
     <header class="header guest">
         <nav>
-            <a href="/users">Список вакансий</a>
+            <a href="/vacancy">Список вакансий</a>
         </nav>
     </header>
 
     <main class="main">
         <div class="main__block main-form">
 
-            <div class="main__vacancy vacancy-form">
-                <b><span>Название вакансии:</span></b>
-                <span>Junior Web-программист</span>
+            <% if(data.length){ data.forEach(vacancy => { %>
+                <form class="main__vacancy vacancy-form" action="" method="post">
+                    <input hidden id="vacancy_id" name="vacancyBlock_id" value=<%= vacancy.id%>>
+                    <b><span>Название вакансии:</span></b>
+                    <span><%= vacancy.name%></span>
+    
+                    <b><span>Описание:</span></b>
+                    <p>
+                        <%= vacancy.description%>
+                    </p>
+    
+                    <b><span>Обязанности:</span></b>
+                    <p>
+                        <%= vacancy.respons%>
+                    </p>
+    
+                    <b><span>Требования:</span></b>
+                    <p>
+                        <%= vacancy.requirements%>
+                    </p>
+    
+                    <b><span>Условия:</span></b>
+                    <p>
+                        <%= vacancy.conditions%>
+                    </p>
+                    
+    
+                    <b><span>Опыт работы:</span></b>
+                    <span><%= vacancy.experience%></span>
+    
+                    <b><span>Заработная плата:</span></b>
+                    <span><%= (vacancy.pay_checkbox == 'on') ? "Договорная": (vacancy.pay + " Руб")%></span>
+    
+                    <b><span>График работы:</span></b>
+                    <span><%= vacancy.schedule%> <%= vacancy.timework%></span>
 
-                <b><span>Описание:</span></b>
-                <p>
-                    Нам требуется junior-программист в отдел создания и сопровождения сайтов.
+                </form>
+            <% }) %>
+            <% }else{ %>
+                <span>No data ever existed.</span>
+            <% } %>
 
-                    Нужно будет выполнять Задачи от наших постоянных клиентов находящихся на поддержке, которые будут Вам по силам (в зависимости от ваших знаний). Помощь в устранении возникающих неполадок, и готовность сделать так, чтобы больше они не появлялись.
-
-                    Комфортный офис и возможность уделять время обучению, позволяет Вам поднимать свой скилл и расти как Программист!
-                </p>
-
-                <b><span>Обязанности:</span></b>
-                <ul>
-                    <li>Настройка сервера</li>
-                    <li>Установка модулей на сервер</li>
-                    <li>Создание резервных копий</li>
-                    <li>Выгрузка на сайт каталогов</li>
-                    <li>Настройка доменов/поддоменов.</li>
-                </ul>
-
-                <b><span>Требования:</span></b>
-                <ul>
-                    <li> Базовые знания PHP</li>
-                    <li>Опыт работы с базами данных будет плюсом</li>
-                    <li>Знания следующих инструментов, которые помогут быстрее влиться в процесс работы (jQuery, CSS, знание фреймворков.)</li>
-                </ul>
-
-                <b><span>Условия:</span></b>
-                <ul>
-                    <li>Официальная заработная плата</li>
-                    <li>Разнообразные задачи, возможность карьерного роста</li>
-                    <li>Удаленно</li>
-                </ul>
-
-                <b><span>Опыт работы:</span></b>
-                <span>1 год</span>
-
-                <b><span>Заработная плата:</span></b>
-                <span>Договорная</span>
-
-                <b><span>График работы:</span></b>
-                <span>5/2 с 9:00 до 18:00</span>
-
-            </div>
-
-            <form class="vacancy__data-form" action="">
+            <form class="vacancy__data-form" action="" method="post">
                 <h2>Оставьте свои контакты, чтобы работодатель мог связаться с вами</h2>
                 <div class="form_inside-block">
                     <span>Почта:</span>
-                    <input type="email" name="" id="" required>
+                    <input type="email" name="email" id="" required>
                     <span>Телефон:</span>
-                    <input type="phone" name="" id="" required>
+                    <input type="phone" name="phone" id="" required>
                     <span>ФИО:</span>
-                    <input type="text" required>
+                    <input type="text" name="nameUser" required>
                     <label for="file">Приложить резюме</label>
                     <input type="file" id="file" name="file" multiple />
                     <input type="submit" value="Отправить">

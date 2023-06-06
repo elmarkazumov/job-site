@@ -23,18 +23,22 @@ exports.renderSelectedVacancy = (req, res) => {
       console.log(error);
     } else{
       res.render('vacancyForm', {root: "./", data: rows});
+      const row = JSON.parse(JSON.stringify(rows));
+      row.map(vacancy => {
+        localStorage.setItem('selectedVacancyName', vacancy.name);
+      })
     }
   })
 }
 
 exports.sendForm = (req, res) => {
-  const sql = "INSERT INTO resume (name, email, phone, file, selectedVacancyId) VALUES ('"+ req.body.nameUser + "','" + req.body.email + "','" + req.body.phone + "','"
-   + req.body.file + "','" + localStorage.getItem('id') +"')";
+  const sql = "INSERT INTO resume (name, email, phone, file, selectedVacancyId, selectedVacancyName, status) VALUES ('"+ req.body.nameUser + "','" + req.body.email + "','" + req.body.phone + "','"
+   + req.body.file + "','" + localStorage.getItem('id') + "','" + localStorage.getItem('selectedVacancyName') + "','" + "В ожидании" +"')";
   db.query(sql, (error, results) => {
       if(error) {
           response.status(400, error, res);
       } else{
-          response.status(200, {message: 'резюме отправлено!', results}, res);
+          // response.status(200, {message: 'резюме отправлено!', results}, res);
       }
   })
 }

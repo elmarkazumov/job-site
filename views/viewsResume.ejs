@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Просмотр резюме</title>
+</head>
+<body>
+    <header class="header">
+        <nav>
+            <a href="/users">Учетные записи</a>
+            <a href="/createVacancy">Создать вакансию</a>
+            <a href="/viewsResume">Просмотр резюме</a>
+            <a href="/viewsVacancy">Просмотр вакансий</a>
+        </nav>
+        <div class="header__logout">
+            <a href="">Выйти</a>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="main__block">
+
+            <% if(data.length){ data.forEach(resume => { %>
+            <form class="main__resume" action="" method="post">
+                <input hidden name="resume_id" value=<%= resume.id%>>
+                <span>По вакансии: <%= resume.selectedVacancyName%></span>
+                <span>Почта: <%= resume.email%></span>
+                <span>Телефон: <%= resume.phone%></span>
+                <span>ФИО: <%= resume.name%></span>
+                <% if(resume.status == "В ожидании") { %>
+                <span id="wait"><%= resume.status%></span>
+                <% } else { %>
+                <span id="completed"><%= resume.status%></span>
+                <% } %>
+
+                <div>
+                    <% if(resume.status == "В ожидании") { %>
+                        <input type="button" value="Скачать резюме">
+                        <input type="submit" name="button_close" value="Завершить">
+                    <% } else { %>
+                        <input type="submit" name="button_close" value="Вернуть в ожидаемое">
+                    <% } %>
+                </div>
+            </form>
+            <% }) %>
+            <% }else{ %>
+                <span>No data ever existed.</span>
+            <% } %>
+
+        </div>
+    </main>
+</body>
+</html>

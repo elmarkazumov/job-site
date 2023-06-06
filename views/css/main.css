@@ -181,7 +181,7 @@ body{
     flex-direction: column;
 }
 
-.main__resume input[type=button]{
+.main__resume input{
     border: 1px solid gray;
     border-radius: 3px;
     padding: 10px;

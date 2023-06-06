@@ -76,3 +76,35 @@ exports.editSaveVacancy = (req, res) => {
         }
     }) 
 }
+
+exports.getAllResume = (req, res) => {
+    db.query("SELECT * FROM `resume`", (error, rows, fields) => {
+      if (error) {
+          console.log(400, error, res);
+        } else {
+          res.render('viewsResume', {root: "./", data: rows})
+        }
+  })
+  }
+
+exports.changeStatusResume = (req, res) => {
+    if(req.body.button_close == 'Завершить'){
+        db.query("UPDATE `resume` SET `status` = '" + "Обработано" + "' WHERE `id` = '" + req.body.resume_id + "'", (error, rows, fields) => {
+            if(error){
+                console.log(error);
+            } else{
+                res.redirect('/viewsResume');
+            }
+        })
+    }
+
+    if(req.body.button_close == 'Вернуть в ожидаемое'){
+        db.query("UPDATE `resume` SET `status` = '" + "В ожидании" + "' WHERE `id` = '" + req.body.resume_id + "'", (error, rows, fields) => {
+            if(error){
+                console.log(error);
+            } else{
+                res.redirect('/viewsResume');
+            }
+        })
+    }    
+}

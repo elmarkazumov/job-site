@@ -50,4 +50,9 @@ module.exports = (app) => {
         .route('/vacancyForm')
         .get(guestController.renderSelectedVacancy)
         .post(guestController.sendForm)
+
+    app
+        .route('/viewsResume')
+        .get(userFunctional.getAllResume)
+        .post(userFunctional.changeStatusResume)
 }

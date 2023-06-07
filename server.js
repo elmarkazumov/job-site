@@ -4,9 +4,11 @@ const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
 const passport = require('passport')
 const path = require('path')
+const cookieParser = require('cookie-parser')
 
 app.use(bodyParser.urlencoded({extended: true}))
 app.use(bodyParser.json())
+app.use(cookieParser())
 app.use(passport.initialize())
 
 app.use(express.static('./views'));

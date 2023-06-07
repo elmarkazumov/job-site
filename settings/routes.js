@@ -6,40 +6,41 @@ module.exports = (app) => {
     const usersController = require('./../Controller/usersController')
     const userFunctional = require('../Controller/vacancyController')
     const guestController = require('../Controller/guestController')
-    const passport = require('passport')
-
+    const cookieJwtAuth = require('../middleware/cookieJwtAuth')
     // app
     //     .route('/api/users')
     //     .get(passport.authenticate('jwt', { session: false }), usersController.getAllUsers)
         // passport.authenticate('jwt', { session: false }),
-    app    
-        .route('/users')
-        .get(usersController.getAllUsers)
-        .post(usersController.usersHandler)
-    
+
     app
         .route('/login')
         .get((req, res) => {
             res.render('login', {root: "./"})
         })
         .post(usersController.signin)
+        
+    app    
+        .route('/users')
+        .get(cookieJwtAuth.cookieJwtAuth, usersController.getAllUsers)
+        .post(cookieJwtAuth.cookieJwtAuth,usersController.usersHandler)
 
     app
         .route('/createVacancy')
         .get((req, res) => {
             res.render('createVacancy', {root: "./"})
+            cookieJwtAuth.cookieJwtAuth()
         })
-        .post(userFunctional.createVacancy)
+        .post(cookieJwtAuth.cookieJwtAuth,userFunctional.createVacancy)
 
     app
         .route('/viewsVacancy')
-        .get(userFunctional.getAllVacancy)
-        .post(userFunctional.changeVacancy)
+        .get(cookieJwtAuth.cookieJwtAuth,userFunctional.getAllVacancy)
+        .post(cookieJwtAuth.cookieJwtAuth,userFunctional.changeVacancy)
 
     app
         .route('/editVacancy')
-        .get(userFunctional.editVacancy)
-        .post(userFunctional.editSaveVacancy)
+        .get(cookieJwtAuth.cookieJwtAuth,userFunctional.editVacancy)
+        .post(cookieJwtAuth.cookieJwtAuth,userFunctional.editSaveVacancy)
 
     app
         .route('/Vacancy')
@@ -53,6 +54,6 @@ module.exports = (app) => {
 
     app
         .route('/viewsResume')
-        .get(userFunctional.getAllResume)
-        .post(userFunctional.changeStatusResume)
+        .get(cookieJwtAuth.cookieJwtAuth,userFunctional.getAllResume)
+        .post(cookieJwtAuth.cookieJwtAuth,userFunctional.changeStatusResume)
 }

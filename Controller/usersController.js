@@ -82,9 +82,12 @@ exports.signin = (req,res) => {
                     const token = jwt.sign({
                         userId: item.id,
                         login: item.login
-                    }, config.jwt, {expiresIn: '24h'});
-                    res.redirect('/users')
-                    // response.status(200, {token: `Bearer ${token}`}, res);
+                    }, config.jwt, {expiresIn: '5h'});
+
+                    res.cookie("token", token, {
+                        httpOnly: true
+                    })
+                    return res.redirect('/users')
                 } else{
                     response.status(401, {message: 'password not valid'}, res);
                 }

@@ -1,5 +1,7 @@
 'user strict'
 
+const { user } = require('../config')
+
 module.exports = (app) => {
     const usersController = require('./../Controller/usersController')
     const userFunctional = require('../Controller/vacancyController')
@@ -15,8 +17,8 @@ module.exports = (app) => {
         
     app    
         .route('/users')
-        .get(cookieJwtAuth.cookieJwtAuth, usersController.getAllUsers)
-        .post(cookieJwtAuth.cookieJwtAuth,usersController.usersHandler)
+        .get(cookieJwtAuth.cookieJwtAuth, usersController.roleDelegation, usersController.getAllUsers)
+        .post(cookieJwtAuth.cookieJwtAuth, usersController.usersHandler)
 
     app
         .route('/createVacancy')
@@ -24,17 +26,26 @@ module.exports = (app) => {
             res.render('createVacancy', {root: "./"})
             cookieJwtAuth.cookieJwtAuth()
         })
-        .post(cookieJwtAuth.cookieJwtAuth,userFunctional.createVacancy)
+        .post(cookieJwtAuth.cookieJwtAuth, userFunctional.createVacancy)
 
     app
         .route('/viewsVacancy')
-        .get(cookieJwtAuth.cookieJwtAuth,userFunctional.getAllVacancy)
-        .post(cookieJwtAuth.cookieJwtAuth,userFunctional.changeVacancy)
+        .get(cookieJwtAuth.cookieJwtAuth, userFunctional.getAllVacancy)
+        .post(cookieJwtAuth.cookieJwtAuth, userFunctional.changeVacancy)
 
     app
         .route('/editVacancy')
-        .get(cookieJwtAuth.cookieJwtAuth,userFunctional.editVacancy)
-        .post(cookieJwtAuth.cookieJwtAuth,userFunctional.editSaveVacancy)
+        .get(cookieJwtAuth.cookieJwtAuth, userFunctional.editVacancy)
+        .post(cookieJwtAuth.cookieJwtAuth, userFunctional.editSaveVacancy)
+
+    app
+        .route('/viewsResume')
+        .get(cookieJwtAuth.cookieJwtAuth, userFunctional.getAllResume)
+        .post(cookieJwtAuth.cookieJwtAuth, userFunctional.changeStatusResume)
+
+    app
+        .route('/logout')
+        .get(usersController.logout)
 
     app
         .route('/Vacancy')
@@ -45,13 +56,4 @@ module.exports = (app) => {
         .route('/vacancyForm')
         .get(guestController.renderSelectedVacancy)
         .post(guestController.sendForm)
-
-    app
-        .route('/viewsResume')
-        .get(cookieJwtAuth.cookieJwtAuth,userFunctional.getAllResume)
-        .post(cookieJwtAuth.cookieJwtAuth,userFunctional.changeStatusResume)
-
-    app
-        .route('/logout')
-        .get(usersController.logout)
 }

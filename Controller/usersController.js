@@ -5,15 +5,15 @@ const jwt = require('jsonwebtoken')
 const response = require('./../response')
 const db = require('./../settings/db')
 const config = require('./../config')
+const localStorage = require('localStorage')
+const alert = require('alert')
 
 exports.getAllUsers = (req, res) => {
-    // res.render('users', {root: "./"})
     
     db.query("SELECT * FROM `users`", (error, rows, fields) => {
         if (error) {
             console.log(400, error, res);
           } else {
-            console.log(rows)
             res.render('users', {root: "./", data: rows})
           }
     })
@@ -41,16 +41,18 @@ exports.usersHandler = (req, res) => {
                 console.log(rows);
                 const row = JSON.parse(JSON.stringify(rows));
                 row.map(item => {
-                    response.status(302, {message: `Пользователь с именем - ${item.login} уже существует!`}, res);
-                    return true;
+                    alert(`Пользователь с именем - ${item.login} уже существует!`);
+                    res.redirect('/users');
                 })
             } else{
-                const sql = "INSERT INTO users (login, password, role) VALUES ('" + req.body.login + "','" + req.body.password + "','" + req.body.role +"')";
+                const sql = "INSERT INTO users (login, password, role, dateCreated) VALUES ('" + req.body.login + "','" + req.body.password + "','" + req.body.role
+                 +"', CURDATE())";
                 db.query(sql, (error, results) => {
                     if(error) {
                         response.status(400, error, res);
                     } else{
-                        response.status(200, {message: 'Успешная регистрация', results}, res);
+                        alert('Успешная регистрация');
+                        res.redirect('/users');
                     }
                 })
             }
@@ -62,7 +64,8 @@ exports.usersHandler = (req, res) => {
             if(error){
                 console.log(error);
             } else{
-                console.log('успешно удалено!');
+                alert('успешно удалено!');
+                res.redirect('/users');
             }
         }) 
     }
@@ -81,8 +84,9 @@ exports.signin = (req,res) => {
                 if(password){
                     const token = jwt.sign({
                         userId: item.id,
-                        login: item.login
-                    }, config.jwt, {expiresIn: '5h'});
+                        login: item.login,
+                        role: item.role
+                    }, config.jwt, {expiresIn: '1h'});
 
                     res.cookie("token", token, {
                         httpOnly: true
@@ -97,8 +101,22 @@ exports.signin = (req,res) => {
     })
 }
 
-exports.roleDelegation = (req, res) => {
+exports.roleDelegation = (req, res, next) => {
+    const token = req.cookies.token;
+    const user = jwt.verify(token, config.jwt);
     
+    db.query("SELECT `role` FROM `users` WHERE `login` = '" + user.login + "'", (error, rows, field) => {
+        const row = JSON.parse(JSON.stringify(rows))
+        row.map(item => {
+            if(item.role == "admin"){
+                localStorage.setItem('role', 'admin');
+            } else{
+                localStorage.setItem('role', 'worker');
+                return res.redirect('/viewsVacancy');
+            }
+        })
+    })
+    next();
 }
 
 exports.logout = (req, res) => {

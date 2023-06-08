@@ -25,7 +25,7 @@ exports.deleteUser = (req, res) => {
             if(error){
                 console.log(error);
             } else{
-                console.log('успешно удалено!');
+                res.redirect('/users')
             }
         }) 
     }
@@ -95,4 +95,13 @@ exports.signin = (req,res) => {
             })
         }
     })
+}
+
+exports.roleDelegation = (req, res) => {
+    
+}
+
+exports.logout = (req, res) => {
+    res.clearCookie("token");
+    return res.redirect('/login');
 }

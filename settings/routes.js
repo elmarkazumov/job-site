@@ -1,16 +1,10 @@
 'user strict'
 
-const { user } = require('../config')
-
 module.exports = (app) => {
     const usersController = require('./../Controller/usersController')
     const userFunctional = require('../Controller/vacancyController')
     const guestController = require('../Controller/guestController')
     const cookieJwtAuth = require('../middleware/cookieJwtAuth')
-    // app
-    //     .route('/api/users')
-    //     .get(passport.authenticate('jwt', { session: false }), usersController.getAllUsers)
-        // passport.authenticate('jwt', { session: false }),
 
     app
         .route('/login')
@@ -56,4 +50,8 @@ module.exports = (app) => {
         .route('/viewsResume')
         .get(cookieJwtAuth.cookieJwtAuth,userFunctional.getAllResume)
         .post(cookieJwtAuth.cookieJwtAuth,userFunctional.changeStatusResume)
+
+    app
+        .route('/logout')
+        .get(usersController.logout)
 }

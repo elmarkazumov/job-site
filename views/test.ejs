@@ -1,0 +1,10 @@
+<% if(roleUser == 'admin') {%>
+    <a href="/users">Учетные записи</a>
+    <a href="/createVacancy">Создать вакансию</a>
+    <a href="/viewsResume">Просмотр резюме</a>
+    <a href="/viewsVacancy">Просмотр вакансий</a>
+<% } else {%>
+    <a href="/createVacancy">Создать вакансию</a>
+    <a href="/viewsResume">Просмотр резюме</a>
+    <a href="/viewsVacancy">Просмотр вакансий</a>
+<% } %>

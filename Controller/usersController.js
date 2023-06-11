@@ -14,7 +14,7 @@ exports.getAllUsers = (req, res) => {
         if (error) {
             console.log(400, error, res);
           } else {
-            res.render('users', {root: "./", data: rows})
+            res.render('users', {root: "./", data: rows, roleUser: localStorage.getItem('role')})
           }
     })
 }
@@ -72,11 +72,11 @@ exports.usersHandler = (req, res) => {
 }
 
 exports.signin = (req,res) => {
-    db.query("SELECT `id`, `login`, `password` FROM `users` WHERE `login` = '"+req.body.login+"'", (error, rows, field) => {
+    db.query("SELECT `id`, `login`, `password`, role FROM `users` WHERE `login` = '"+req.body.login+"'", (error, rows, field) => {
         if(error){
             response.status(400, error, res);
         } else if(rows.length <= 0){
-            response.status(404, 'user in not found', res);
+            alert('user in not found');
         } else{
             const row = JSON.parse(JSON.stringify(rows));
             row.map(item => {
@@ -91,9 +91,10 @@ exports.signin = (req,res) => {
                     res.cookie("token", token, {
                         httpOnly: true
                     })
-                    return res.redirect('/users')
+                    localStorage.setItem('role', item.role);
+                    return res.redirect('/users');
                 } else{
-                    response.status(401, {message: 'password not valid'}, res);
+                    alert('password not valid');
                 }
                 return true;
             })
@@ -116,6 +117,11 @@ exports.roleDelegation = (req, res, next) => {
             }
         })
     })
+    next();
+}
+
+exports.navViewsDelegation = (req, res, next) => {
+    res.render('navContent', {roleUser: localStorage.getItem('role')})
     next();
 }
 

@@ -9,10 +9,16 @@
 <body>
     <header class="header">
         <nav>
-            <a href="/users">Учетные записи</a>
-            <a href="/createVacancy">Создать вакансию</a>
-            <a href="/viewsResume">Просмотр резюме</a>
-            <a href="/viewsVacancy">Просмотр вакансий</a>
+            <% if(roleUser == 'admin') {%>
+                <a href="/users">Учетные записи</a>
+                <a href="/createVacancy">Создать вакансию</a>
+                <a href="/viewsResume">Просмотр резюме</a>
+                <a href="/viewsVacancy">Просмотр вакансий</a>
+            <% } else {%>
+                <a href="/createVacancy">Создать вакансию</a>
+                <a href="/viewsResume">Просмотр резюме</a>
+                <a href="/viewsVacancy">Просмотр вакансий</a>
+            <% } %>
         </nav>
         <div class="header__logout">
             <a href="/logout">Выйти</a>

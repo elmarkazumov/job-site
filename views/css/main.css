@@ -74,7 +74,7 @@ body{
 
 .main__elem-user{
     width: 100%;
-    min-height: 100px;
+    min-height: 80px;
     border-radius: 5px;
     border: 1px solid gray;
     background-color: #F5F5F5;
@@ -159,11 +159,11 @@ body{
     margin-left: 40px;
 }
 
-.main__vacancy #edit-Vacancy{
+.main__vacancy #editVacancy{
     background-color: rgb(173, 150, 137);
 }
 
-.main__vacancy #delete-Vacancy{
+.main__vacancy #deleteVacancy{
     background-color: rgb(221, 92, 92);
 }
 

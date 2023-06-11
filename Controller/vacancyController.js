@@ -1,6 +1,7 @@
 const response = require('../response')
 const db = require('../settings/db')
 const localStorage = require("localStorage")
+const alert = require('alert')
 
 exports.createVacancy = (req, res) => {
     db.query("SELECT * FROM `Vacancy` WHERE `name` = '" + req.body.name + "'", (error, rows, fields) =>{
@@ -12,7 +13,7 @@ exports.createVacancy = (req, res) => {
             const row = JSON.parse(JSON.stringify(rows));
 
             row.map(item => {
-                response.status(302, {message: `Вакансия с названием - ${item.name} уже существует!`}, res);
+                alert(`Вакансия с названием - ${item.name} уже существует!`);
                 return true;
             })
         } else{
@@ -23,7 +24,8 @@ exports.createVacancy = (req, res) => {
                 if(error) {
                     response.status(400, error, res);
                 } else{
-                    response.status(200, {message: 'Вакансия успешно размещена', results}, res);
+                    alert('Вакансия успешно размещена');
+                    res.redirect('/viewsVacancy');
                 }
             })
         }
@@ -35,7 +37,7 @@ exports.getAllVacancy = (req, res) => {
         if (error) {
             console.log(400, error, res);
           } else {
-            res.render('viewVacancy', {root: "./", data: rows})
+            res.render('viewVacancy', {root: "./", data: rows, roleUser: localStorage.getItem('role')})
           }
     })
 }
@@ -46,6 +48,8 @@ exports.changeVacancy = (req, res) => {
             if(error){
                 console.log(error);
             } else{
+                alert('Успешно удалено!');
+                res.redirect('/viewsVacancy');
             }
         }) 
     }
@@ -60,7 +64,7 @@ exports.editVacancy = (req, res) => {
         if(error){
             console.log(error);
         } else{
-            res.render('editVacancy', {root: "./", data: rows});
+            res.render('editVacancy', {root: "./", data: rows, roleUser: localStorage.getItem('role')});
         }
     }) 
 }
@@ -82,12 +86,25 @@ exports.getAllResume = (req, res) => {
       if (error) {
           console.log(400, error, res);
         } else {
-          res.render('viewsResume', {root: "./", data: rows})
+          res.render('viewsResume', {root: "./", data: rows, roleUser: localStorage.getItem('role')})
         }
   })
-  }
+}
 
-exports.changeStatusResume = (req, res) => {
+exports.deleteResume = (req, res) => {
+    if(req.body.button_delete == 'Удалить'){
+        db.query("DELETE FROM `resume` WHERE `id` = '" + req.body.resume_id + "'", (error, rows, fields) =>{
+            if(error){
+                console.log(error);
+            } else{
+                alert('Успешно удалено!');
+                res.redirect('/viewsResume');
+            }
+        }) 
+    }
+}
+
+exports.changeStatusResume = (req, res, next) => {
     if(req.body.button_close == 'Завершить'){
         db.query("UPDATE `resume` SET `status` = '" + "Обработано" + "' WHERE `id` = '" + req.body.resume_id + "'", (error, rows, fields) => {
             if(error){
@@ -107,4 +124,5 @@ exports.changeStatusResume = (req, res) => {
             }
         })
     }    
+    next();
 }

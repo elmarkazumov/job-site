@@ -9,10 +9,16 @@
 <body>
     <header class="header">
         <nav>
-            <a href="/users">Учетные записи</a>
-            <a href="/createVacancy">Создать вакансию</a>
-            <a href="/viewsResume">Просмотр резюме</a>
-            <a href="/viewsVacancy">Просмотр вакансий</a>
+            <% if(roleUser == 'admin') {%>
+                <a href="/users">Учетные записи</a>
+                <a href="/createVacancy">Создать вакансию</a>
+                <a href="/viewsResume">Просмотр резюме</a>
+                <a href="/viewsVacancy">Просмотр вакансий</a>
+            <% } else {%>
+                <a href="/createVacancy">Создать вакансию</a>
+                <a href="/viewsResume">Просмотр резюме</a>
+                <a href="/viewsVacancy">Просмотр вакансий</a>
+            <% } %>
         </nav>
         <div class="header__logout">
             <a href="/logout">Выйти</a>
@@ -29,16 +35,16 @@
                 <input type="text" name="name" class="name-vacancy" placeholder="" required value=<%= vacancy.name%>>
 
                 <span>Описание:</span>
-                <textarea name="description" id="" cols="60" rows="3"><%= vacancy.description%></textarea>
+                <textarea name="description" id="" cols="60" rows="3" required><%= vacancy.description%></textarea>
 
                 <span>Обязанности:</span>
-                <textarea name="respons" id="" cols="35" rows="5"><%= vacancy.respons%></textarea>
+                <textarea name="respons" id="" cols="35" rows="5" required><%= vacancy.respons%></textarea>
 
                 <span>Требования:</span>
-                <textarea name="requirements" id="" cols="35" rows="5"><%= vacancy.requirements%></textarea>
+                <textarea name="requirements" id="" cols="35" rows="5" required><%= vacancy.requirements%></textarea>
 
                 <span>Условия:</span>
-                <textarea name="conditions" id="" cols="35" rows="5"><%= vacancy.conditions%></textarea>
+                <textarea name="conditions" id="" cols="35" rows="5"required ><%= vacancy.conditions%></textarea>
 
                 <span>Опыт работы:</span>
                 <select name="experience" id="" required value=<%= vacancy.experience%>>
@@ -57,14 +63,14 @@
                 </div>
 
                 <span>График работы:</span>
-                <select name="schedule" id="">
+                <select name="schedule" id="" required>
                     <option value="5/2">5/2</option>
                     <option value="2/2">2/2</option>
                     <option value="indiv">Свой</option>
                 </select>
 
                 <span>Время:</span>
-                <select name="timework" id="">
+                <select name="timework" id="" required>
                     <option value="8-17">8:00 - 17:00</option>
                     <option value="9-18">9:00 - 18:00</option>
                     <option value="10-19">10:00 - 19:00</option>

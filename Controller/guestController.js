@@ -32,13 +32,13 @@ exports.renderSelectedVacancy = (req, res) => {
 }
 
 exports.sendForm = (req, res) => {
-  const sql = "INSERT INTO resume (name, email, phone, file, selectedVacancyId, selectedVacancyName, status) VALUES ('"+ req.body.nameUser + "','" + req.body.email + "','" + req.body.phone + "','"
-   + req.body.file + "','" + localStorage.getItem('id') + "','" + localStorage.getItem('selectedVacancyName') + "','" + "В ожидании" +"')";
+  const sql = "INSERT INTO resume (name, email, phone, file, selectedVacancyName, status) VALUES ('"+ req.body.nameUser + "','" + req.body.email + "','" + req.body.phone + "','"
+   + req.body.file + "','" + localStorage.getItem('selectedVacancyName') + "','" + "В ожидании" +"')";
   db.query(sql, (error, results) => {
       if(error) {
           response.status(400, error, res);
       } else{
-          // response.status(200, {message: 'резюме отправлено!', results}, res);
+          alert('резюме отправлено!');
       }
   })
 }

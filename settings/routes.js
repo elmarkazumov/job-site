@@ -4,9 +4,10 @@ const { user } = require('../config')
 
 module.exports = (app) => {
     const usersController = require('./../Controller/usersController')
-    const userFunctional = require('../Controller/vacancyController')
+    const vacancyController = require('../Controller/vacancyController')
     const guestController = require('../Controller/guestController')
     const cookieJwtAuth = require('../middleware/cookieJwtAuth')
+    const localStorage = require('localStorage')
 
     app
         .route('/login')
@@ -23,25 +24,25 @@ module.exports = (app) => {
     app
         .route('/createVacancy')
         .get((req, res) => {
-            res.render('createVacancy', {root: "./"})
+            res.render('createVacancy', {root: "./", roleUser: localStorage.getItem('role')})
             cookieJwtAuth.cookieJwtAuth()
         })
-        .post(cookieJwtAuth.cookieJwtAuth, userFunctional.createVacancy)
+        .post(cookieJwtAuth.cookieJwtAuth, vacancyController.createVacancy)
 
     app
         .route('/viewsVacancy')
-        .get(cookieJwtAuth.cookieJwtAuth, userFunctional.getAllVacancy)
-        .post(cookieJwtAuth.cookieJwtAuth, userFunctional.changeVacancy)
+        .get(cookieJwtAuth.cookieJwtAuth, vacancyController.getAllVacancy)
+        .post(cookieJwtAuth.cookieJwtAuth, vacancyController.changeVacancy)
 
     app
         .route('/editVacancy')
-        .get(cookieJwtAuth.cookieJwtAuth, userFunctional.editVacancy)
-        .post(cookieJwtAuth.cookieJwtAuth, userFunctional.editSaveVacancy)
+        .get(cookieJwtAuth.cookieJwtAuth, vacancyController.editVacancy)
+        .post(cookieJwtAuth.cookieJwtAuth, vacancyController.editSaveVacancy)
 
     app
         .route('/viewsResume')
-        .get(cookieJwtAuth.cookieJwtAuth, userFunctional.getAllResume)
-        .post(cookieJwtAuth.cookieJwtAuth, userFunctional.changeStatusResume)
+        .get(cookieJwtAuth.cookieJwtAuth, vacancyController.getAllResume)
+        .post(cookieJwtAuth.cookieJwtAuth, vacancyController.changeStatusResume, vacancyController.deleteResume)
 
     app
         .route('/logout')

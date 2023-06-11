@@ -9,10 +9,16 @@
 <body>
     <header class="header">
         <nav>
-            <a href="/users">Учетные записи</a>
-            <a href="/createVacancy">Создать вакансию</a>
-            <a href="/viewsResume">Просмотр резюме</a>
-            <a href="/viewsVacancy">Просмотр вакансий</a>
+            <% if(roleUser == 'admin') {%>
+                <a href="/users">Учетные записи</a>
+                <a href="/createVacancy">Создать вакансию</a>
+                <a href="/viewsResume">Просмотр резюме</a>
+                <a href="/viewsVacancy">Просмотр вакансий</a>
+            <% } else {%>
+                <a href="/createVacancy">Создать вакансию</a>
+                <a href="/viewsResume">Просмотр резюме</a>
+                <a href="/viewsVacancy">Просмотр вакансий</a>
+            <% } %>
         </nav>
         <div class="header__logout">
             <a href="/logout">Выйти</a>
@@ -34,10 +40,11 @@
                 <% } else { %>
                 <span id="completed"><%= resume.status%></span>
                 <% } %>
-
+                
                 <div>
+                    <input type="submit" name="button_delete" value="Удалить">
                     <% if(resume.status == "В ожидании") { %>
-                        <input type="button" value="Скачать резюме">
+                        <input type="submit" value="Скачать резюме">
                         <input type="submit" name="button_close" value="Завершить">
                     <% } else { %>
                         <input type="submit" name="button_close" value="Вернуть в ожидаемое">

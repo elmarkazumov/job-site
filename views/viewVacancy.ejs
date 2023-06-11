@@ -9,10 +9,16 @@
 <body>
     <header class="header">
         <nav>
-            <a href="/users">Учетные записи</a>
-            <a href="/createVacancy">Создать вакансию</a>
-            <a href="/viewsResume">Просмотр резюме</a>
-            <a href="/viewsVacancy">Просмотр вакансий</a>
+            <% if(roleUser == 'admin') {%>
+                <a href="/users">Учетные записи</a>
+                <a href="/createVacancy">Создать вакансию</a>
+                <a href="/viewsResume">Просмотр резюме</a>
+                <a href="/viewsVacancy">Просмотр вакансий</a>
+            <% } else {%>
+                <a href="/createVacancy">Создать вакансию</a>
+                <a href="/viewsResume">Просмотр резюме</a>
+                <a href="/viewsVacancy">Просмотр вакансий</a>
+            <% } %>
         </nav>
         <div class="header__logout">
             <a href="/logout">Выйти</a>
@@ -23,8 +29,7 @@
         <div class="main__block">
             
             <% if(data.length){ data.forEach(vacancy => { %>
-                <form action="" method="post">
-                    <div class="main__vacancy">
+                <form class="main__vacancy" action="" method="post">
                         <input hidden id="vacancy_id" name="vacancyBlock_id" value=<%= vacancy.id%>>
                         <b><span>Название вакансии:</span></b>
                         <span><%= vacancy.name%></span>
@@ -63,7 +68,6 @@
                             <input type="submit" id="editVacancy" name="button_action" value="Изменить">
                             <input type="submit" id="deleteVacancy" name="button_action" value="Удалить">
                         </div>
-                    </div>
                 </form>
             <% }) %>
             <% }else{ %>
@@ -73,7 +77,6 @@
         </div>
     </main>
 
-<!-- <script src="/js/script.js"></script>
-<script type="module" src="/settings/db.js"></script> -->
+<script src="./js/script.js"></script>
 </body>
 </html>

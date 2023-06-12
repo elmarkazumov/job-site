@@ -58,7 +58,7 @@
                 <span>No data ever existed.</span>
             <% } %>
 
-            <form class="vacancy__data-form" action="" method="post">
+            <form class="vacancy__data-form" enctype="multipart/form-data" method="post">
                 <h2>Оставьте свои контакты, чтобы работодатель мог связаться с вами</h2>
                 <div class="form_inside-block">
                     <span>Почта:</span>
@@ -68,7 +68,7 @@
                     <span>ФИО:</span>
                     <input type="text" name="nameUser" required>
                     <label for="file">Приложить резюме</label>
-                    <input type="file" id="file" name="file" multiple />
+                    <input type="file" id="file" name="fileResume">
                     <input type="submit" value="Отправить">
                 </div>
             </form>
@@ -76,10 +76,6 @@
     </main>
 
     <footer class="footer">
-        <div class="footer__block">
-            <span>О нас</span>
-            <span>Контакты</span>
-        </div>
         <span>© 2023</span>
     </footer>
 </body>

@@ -44,7 +44,10 @@
                 <div>
                     <input type="submit" name="button_delete" value="Удалить">
                     <% if(resume.status == "В ожидании") { %>
-                        <input type="submit" value="Скачать резюме">
+                        <% if(resume.file.length > 15){ %>
+                        <input hidden name="file_name" value=<%= resume.file%>>
+                        <a href="/download/<%= resume.file%>"><input type="button" name="button_download" value="Скачать резюме"></a>
+                            <% } %>
                         <input type="submit" name="button_close" value="Завершить">
                     <% } else { %>
                         <input type="submit" name="button_close" value="Вернуть в ожидаемое">

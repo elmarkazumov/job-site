@@ -57,4 +57,12 @@ module.exports = (app) => {
         .route('/vacancyForm')
         .get(guestController.renderSelectedVacancy)
         .post(guestController.sendForm)
+
+    app
+        .route('/download/:filename')
+        .get((req, res) => {
+            const filename = req.params.filename;
+            res.download(`./uploads/${filename}`);
+        });
+          
 }
